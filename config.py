@@ -81,13 +81,25 @@ SourcesGroup = [
                default='https://github.com/openstack/horizon.git',
                help="Git URL for creating a Package Source"),
     cfg.StrOpt('branch',
-               default='branch',
+               default='master',
                help="Git Branch for creating a Package Source"),
 ]
 
 BuildsGroup = [
     cfg.StrOpt('a',
                default='0'),
+]
+
+MirrorsGroup = [
+    cfg.StrOpt('url',
+               default='https://github.com/openstack/horizon.git',
+               help="Git URL for creating a Mirror"),
+    cfg.StrOpt('series',
+               default='manasi24/aasemble',
+               help="Git Branch for creating a Mirror"),
+    cfg.StrOpt('components',
+               default='master',
+               help="Component for creating a Mirror"),
 ]
 
 def _get_config_files():
@@ -110,4 +122,5 @@ def get_config():
     cfg.CONF.register_opts(ScenarioGroup, group="scenario")
     cfg.CONF.register_opts(SourcesGroup, group="sources")
     cfg.CONF.register_opts(BuildsGroup, group="builds")
+    cfg.CONF.register_opts(MirrorsGroup, group="mirrors")
     return cfg.CONF

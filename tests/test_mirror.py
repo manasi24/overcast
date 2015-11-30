@@ -1,3 +1,6 @@
+# Copyright 2015 Hewlett-Packard Development Company, L.P
+# All Rights Reserved.
+#
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
 #    not use this file except in compliance with the License. You may obtain
 #    a copy of the License at
@@ -9,20 +12,14 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
+
 import helpers
-from pages import loginpage
+from pages.mirrors import mirrorspage
 
+class TestMirror(helpers.TestCase):
 
-class TestLogin(helpers.BaseTestCase):
-    """This is a basic scenario test:
-    * checks that the login page is available
-    * logs in as a regular user
-    * checks that the user home page loads without error
-    """
-    def test_login(self):
-	import pdb; pdb.set_trace()
-        print self.driver,self.CONFIG
-        login_pg = loginpage.LoginPage(self.driver, self.CONFIG)
-        login_pg.go_to_login_page()
-        login_pg.login()
-        login_pg.log_out()
+    def test_mirror(self):
+        mirror_pg = mirrorspage.MirrorPage(self.driver, self.CONFIG)
+        mirror_pg.click_on_mirrors_button()
+        mirror_pg.create_new_mirror()
+        mirror_pg.delete_mirror()
