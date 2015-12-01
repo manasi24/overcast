@@ -11,17 +11,14 @@
 #    under the License.
 
 from selenium.webdriver.common import by
-from selenium.webdriver.common import keys
-import sys
 import pageobject
-import time
 
 class LoginPage(pageobject.PageObject):
     _login_username_field_locator = (by.By.ID, 'login_field')
     _login_password_field_locator = (by.By.ID, 'password')
     _login_submit_button_locator = (by.By.CSS_SELECTOR,
                                     '.btn.btn-primary.btn-lg')
-    _sign_in_button_locator = (by.By.NAME,'commit')
+    _sign_in_button_locator = (by.By.NAME, 'commit')
     _logout_locator = (by.By.LINK_TEXT, 'Log out')
 
     def __init__(self, driver, conf):
@@ -41,23 +38,23 @@ class LoginPage(pageobject.PageObject):
     def login_button(self):
         return self.driver.find_element(*self._login_submit_button_locator)
 
-    @property 
+    @property
     def sign_in_button(self):
         return self.driver.find_element(*self._sign_in_button_locator)
 
     @property
     def logout_button(self):
-        return self.driver.find_element(*self._logout_locator)        
+        return self.driver.find_element(*self._logout_locator)
 
     def login(self, user=None, password=None):
         return self._do_login(user, password, self.sign_in)
 
     def _do_login(self, user, password, login_method):
-            if password is None:
-                password = self.conf.identity.password
-            if user is None:
-                user = self.conf.identity.username
-            return self.login_as_user(user, password, login_method)
+        if password is None:
+            password = self.conf.identity.password
+        if user is None:
+            user = self.conf.identity.username
+        return self.login_as_user(user, password, login_method)
 
     def login_as_user(self, user, password, login_method):
         self.username.send_keys(user)
@@ -66,10 +63,10 @@ class LoginPage(pageobject.PageObject):
 
     def sign_in(self):
         self.sign_in_button.click()
-    
+
     def go_to_login_page(self):
         self.driver.get(self.login_url)
         self.login_button.click()
-    
+
     def log_out(self):
         self.logout_button.click()

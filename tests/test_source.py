@@ -17,6 +17,11 @@ import helpers
 from pages.sources import sourcespage
 
 class TestSource(helpers.TestCase):
+    """This is a basic source test:
+    * checks that user is able to create a source
+    * after successful package source creation
+    * checks that the user is able to delete the package source without error
+    """
 
     def test_source(self):
         source_pg = sourcespage.SourcePage(self.driver, self.CONFIG)

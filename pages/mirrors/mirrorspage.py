@@ -10,12 +10,8 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import sys
 from selenium.webdriver.common import by
-from selenium.common.exceptions import NoSuchElementException 
-from selenium.webdriver.common import keys
-from selenium.webdriver.support import expected_conditions as EC
-
+from selenium.common.exceptions import NoSuchElementException
 from pages import pageobject
 
 class MirrorPage(pageobject.PageObject):
@@ -40,7 +36,7 @@ class MirrorPage(pageobject.PageObject):
     @property
     def series(self):
         return self.driver.find_element(*self._series_locator)
-    
+
     @property
     def components(self):
         return self.driver.find_element(*self._components_locator)
@@ -48,7 +44,7 @@ class MirrorPage(pageobject.PageObject):
     @property
     def submit_button(self):
         return self.driver.find_element(*self._submit_button_locator)
-    
+
     @property
     def mirrors_button(self):
         return self.driver.find_element(*self._mirrors_button_locator)
@@ -63,21 +59,22 @@ class MirrorPage(pageobject.PageObject):
 
     @property
     def public_checkbox(self):
-        return self.driver.find_element(*self._public_checkbox_locator)    
+        return self.driver.find_element(*self._public_checkbox_locator)
 
     def click_on_mirrors_button(self):
-        try :
+        try:
             if self.mirrors_button.is_displayed():
                 self.mirrors_button.click()
                 print "mirror button found"
         except NoSuchElementException:
-            print "mirror button not found" 
+            print "mirror button not found"
 
     def delete_mirror(self):
-        follow_buttons = self.driver.find_elements_by_xpath('//table[@class="table table-striped"]/tbody/tr[1]/td[1]/a')
+        follow_buttons = self.driver.find_elements_by_xpath(
+                  '//table[@class="table table-striped"]/tbody/tr[1]/td[1]/a')
         follow_buttons[0].click()
         self.delete_button.click()
-        print "deleted mirror"    
+        print "deleted mirror"
 
     def create_new_mirror(self):
         self.new_button.click()

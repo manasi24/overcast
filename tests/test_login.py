@@ -9,9 +9,9 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
+
 import helpers
 from pages import loginpage
-
 
 class TestLogin(helpers.BaseTestCase):
     """This is a basic scenario test:
@@ -19,6 +19,7 @@ class TestLogin(helpers.BaseTestCase):
     * logs in as a regular user
     * checks that the user home page loads without error
     """
+
     def test_login(self):
         login_pg = loginpage.LoginPage(self.driver, self.CONFIG)
         login_pg.go_to_login_page()

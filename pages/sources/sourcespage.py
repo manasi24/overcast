@@ -10,13 +10,9 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import sys
 from selenium.webdriver.common import by
 from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException 
-from selenium.webdriver.common import keys
-from selenium.webdriver.support import expected_conditions as EC
-
+from selenium.common.exceptions import NoSuchElementException
 from pages import pageobject
 
 class SourcePage(pageobject.PageObject):
@@ -40,11 +36,11 @@ class SourcePage(pageobject.PageObject):
     @property
     def branch(self):
         return self.driver.find_element(*self._branch_locator)
-    
+
     @property
     def submit_button(self):
         return self.driver.find_element(*self._submit_button_locator)
-    
+
     @property
     def sources_button(self):
         return self.driver.find_element(*self._sources_button_locator)
@@ -62,21 +58,21 @@ class SourcePage(pageobject.PageObject):
         return self.driver.find_element(*self._dropdown_menu_locator)
 
     def click_on_sources_button(self):
-        try :
+        try:
             if self.sources_button.is_displayed():
                 self.sources_button.click()
-                #print "source button found"
         except NoSuchElementException:
-            print "source button not found" 
+            print "source button not found"
 
     def click_on_dropdown_menu(self):
-        mySelect = Select(self.driver.find_element_by_id("id_series"))
-        mySelect.select_by_visible_text("manasishah24/aasemble")
-    
+        dropdown = Select(self.driver.find_element_by_id("id_series"))
+        dropdown.select_by_visible_text("manasishah24/aasemble")
+
     def delete_package_source(self):
-        follow_buttons = self.driver.find_elements_by_xpath('//small/a/span[@class="glyphicon glyphicon-pencil"]')
+        follow_buttons = self.driver.find_elements_by_xpath(
+                         '//small/a/span[@class="glyphicon glyphicon-pencil"]')
         follow_buttons[0].click()
-	self.delete_button.click()
+        self.delete_button.click()
         print "source deleted"
 
     def create_new_package_source(self):
