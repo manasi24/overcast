@@ -13,7 +13,6 @@
 import sys
 from selenium.webdriver.common import by
 from selenium.webdriver.support.ui import Select
-#import selenium.common.exceptions as Exceptions
 from selenium.common.exceptions import NoSuchElementException 
 from selenium.webdriver.common import keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -25,13 +24,9 @@ class SourcePage(pageobject.PageObject):
     _branch_locator = (by.By.ID, 'id_branch')
     _submit_button_locator = (by.By.CSS_SELECTOR, '.btn.btn-primary')
     _sources_button_locator = (by.By.LINK_TEXT, 'Sources')
-    #_new_button_locator = (by.By.LINK_TEXT, 'New')
-    _new_button_locator = (by.By.CSS_SELECTOR, '.btn.btn-primary')
-#    _login_submit_button_locator = (by.By.NAME, 'commit')
-    #_dropdown_menu_locator = (by.By.XPATH, './/select[@id='"id_series"']/option[@value='"38"']')
-    #_dropdown_menu_locator = (by.By.CSS_SELECTOR, "select#id_series > option[value='38']")
-    #_dropdown_menu_locator = (by.By.XPATH, '//select[@id='"id_series"']/option[text()='"manasishah24/aasemble"']')
+    _new_button_locator = (by.By.LINK_TEXT, 'New')
     _dropdown_menu_locator = (by.By.ID, 'id_series')
+    _delete_button_locator = (by.By.CSS_SELECTOR, '.btn.btn-danger')
 
     def __init__(self, driver, conf):
         """Constructor"""
@@ -59,6 +54,10 @@ class SourcePage(pageobject.PageObject):
         return self.driver.find_element(*self._new_button_locator)
 
     @property
+    def delete_button(self):
+        return self.driver.find_element(*self._delete_button_locator)
+
+    @property
     def dropdown_menu(self):
         return self.driver.find_element(*self._dropdown_menu_locator)
 
@@ -70,32 +69,22 @@ class SourcePage(pageobject.PageObject):
         except NoSuchElementException:
             print "source button not found" 
 
-    def click_on_new_button(self):
-        self.new_button.click()
-
     def click_on_dropdown_menu(self):
         mySelect = Select(self.driver.find_element_by_id("id_series"))
-        #mySelect.select_by_value("38")
         mySelect.select_by_visible_text("manasishah24/aasemble")
     
     def delete_package_source(self):
         follow_buttons = self.driver.find_elements_by_xpath('//small/a/span[@class="glyphicon glyphicon-pencil"]')
-        #self.driver.find_elements_by_xpath('//small/a/span[@class="glyphicon glyphicon-pencil"]').click()
         follow_buttons[0].click()
-
-        #follow_buttons.click()
-        self.driver.find_element_by_css_selector(".btn.btn-danger").click()
-        print "deleted"
+	self.delete_button.click()
+        print "source deleted"
 
     def create_new_package_source(self):
-        self.click_on_new_button()
+        self.new_button.click()
         git_url = self.conf.sources.git_url
         branch = self.conf.sources.branch
         self.git_url.send_keys(git_url)
         self.branch.send_keys(branch)
         self.click_on_dropdown_menu()
-        self.click_on_submit()
-        #print "created"
-        
-    def click_on_submit(self):
         self.submit_button.click()
+        print "new package source created"

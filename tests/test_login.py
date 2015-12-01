@@ -20,8 +20,6 @@ class TestLogin(helpers.BaseTestCase):
     * checks that the user home page loads without error
     """
     def test_login(self):
-	import pdb; pdb.set_trace()
-        print self.driver,self.CONFIG
         login_pg = loginpage.LoginPage(self.driver, self.CONFIG)
         login_pg.go_to_login_page()
         login_pg.login()

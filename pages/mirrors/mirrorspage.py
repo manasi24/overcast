@@ -12,7 +12,6 @@
 
 import sys
 from selenium.webdriver.common import by
-from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException 
 from selenium.webdriver.common import keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -70,19 +69,15 @@ class MirrorPage(pageobject.PageObject):
         try :
             if self.mirrors_button.is_displayed():
                 self.mirrors_button.click()
-                print "source button found"
+                print "mirror button found"
         except NoSuchElementException:
-            print "source button not found" 
-
-    def click_on_new_button(self):
-        self.new_button.click()
+            print "mirror button not found" 
 
     def delete_mirror(self):
         follow_buttons = self.driver.find_elements_by_xpath('//table[@class="table table-striped"]/tbody/tr[1]/td[1]/a')
         follow_buttons[0].click()
-        #follow_buttons.click()
         self.delete_button.click()
-        print "deleted"    
+        print "deleted mirror"    
 
     def create_new_mirror(self):
         self.new_button.click()
@@ -94,4 +89,4 @@ class MirrorPage(pageobject.PageObject):
         self.components.send_keys(components)
         self.public_checkbox.click()
         self.submit_button.click()
-        print "created"
+        print "created a new mirror"

@@ -29,10 +29,6 @@ class LoginPage(pageobject.PageObject):
         self.login_url = self.conf.dashboard.login_url
         self._page_title = "Login"
 
-    def is_login_page(self):
-        return (self.is_the_current_page() and
-                self._is_element_visible(*self._login_submit_button_locator))
-
     @property
     def username(self):
         return self.driver.find_element(*self._login_username_field_locator)
@@ -53,24 +49,8 @@ class LoginPage(pageobject.PageObject):
     def logout_button(self):
         return self.driver.find_element(*self._logout_locator)        
 
-    def _click_on_login_button(self):
-        self.login_button.click()
-
-    def _click_on_sign_in_button(self):
-        self.sign_in_button.click()
-
-    def _press_enter_on_login_button(self):
-        self.login_button.send_keys(keys.Keys.RETURN)
-
     def login(self, user=None, password=None):
-        return self.login_with_mouse_click(user, password)
-
-    def login_with_mouse_click(self, user, password):
-        return self._do_login(user, password, self._click_on_sign_in_button)
-
-    def login_with_enter_key(self, user, password):
-        return self._do_login(user, password,
-                              self._press_enter_on_login_button)
+        return self._do_login(user, password, self.sign_in)
 
     def _do_login(self, user, password, login_method):
             if password is None:
@@ -84,21 +64,12 @@ class LoginPage(pageobject.PageObject):
         self.password.send_keys(password)
         login_method()
 
-    def login_submit(self):
-       self._click_on_login_button()
-
     def sign_in(self):
-       self._click_on_sign_in_button()
+        self.sign_in_button.click()
     
     def go_to_login_page(self):
-       self.driver.get(self.login_url)
-       self.login_submit()
+        self.driver.get(self.login_url)
+        self.login_button.click()
     
-
-    def _click_on_logout_button(self):
-        self.logout_button.click()
-
     def log_out(self):
-        self._click_on_logout_button()
-        #return self.go_to_main_page()
-       #self.is_the_current_page()
+        self.logout_button.click()
